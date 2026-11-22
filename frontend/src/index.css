@@ -1,0 +1,278 @@
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+  --bg-dark: #061A2F;
+  --bg-navy: #0A3D62;
+  --bg-deep: #082946;
+  --ocean-blue: #0077B6;
+  --ocean-cyan: #00B4D8;
+  --ocean-sky: #38BDF8;
+  --ocean-ice: #E0F2FE;
+  --ocean-light: #F0F9FF;
+  --text-main: #0F172A;
+  --text-dim: #475569;
+  --text-muted: #64748B;
+  --border-subtle: #E2E8F0;
+  --border-cyan: rgba(0, 180, 216, 0.25);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 18px rgba(10, 61, 98, 0.08);
+  --shadow-lg: 0 12px 32px rgba(6, 26, 47, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F8FAFC;
+  color: var(--text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Layout Containers */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 280px;
+  background: linear-gradient(180deg, #061A2F 0%, #0A3D62 100%);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(0, 180, 216, 0.2);
+}
+
+.main-content {
+  flex: 1;
+  padding: 24px 36px;
+  overflow-y: auto;
+  max-width: 1440px;
+}
+
+/* Typography & Badges */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.badge-cyan {
+  background: rgba(0, 180, 216, 0.15);
+  color: #0284C7;
+  border: 1px solid rgba(0, 180, 216, 0.35);
+}
+
+.badge-green {
+  background: #DCFCE7;
+  color: #166534;
+  border: 1px solid #86EFAC;
+}
+
+.badge-amber {
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FCD34D;
+}
+
+.badge-red {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #FCA5A5;
+}
+
+/* Cards */
+.card {
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  padding: 22px;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-color: #CBD5E1;
+  box-shadow: var(--shadow-md);
+}
+
+.metric-card {
+  background: linear-gradient(135deg, #092C48 0%, #0A3D62 50%, #005082 100%);
+  border-radius: 14px;
+  padding: 20px;
+  color: #FFFFFF;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(116, 185, 224, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00B4D8, #48CAE4, #90E0EF);
+}
+
+.metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(0, 180, 216, 0.5);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0A3D62 0%, #0077B6 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(10, 61, 98, 0.2);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #082946 0%, #005F92 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(10, 61, 98, 0.3);
+}
+
+.btn-secondary {
+  background: #F1F5F9;
+  color: #334155;
+  border: 1px solid #CBD5E1;
+}
+
+.btn-secondary:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+.btn-outline-cyan {
+  background: rgba(0, 180, 216, 0.1);
+  color: #0284C7;
+  border: 1px solid rgba(0, 180, 216, 0.4);
+}
+
+.btn-outline-cyan:hover {
+  background: rgba(0, 180, 216, 0.2);
+  border-color: #00B4D8;
+}
+
+/* Tables */
+.data-table-container {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.data-table th {
+  background: #F8FAFC;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: #475569;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #1E293B;
+  white-space: nowrap;
+}
+
+.data-table tr:hover td {
+  background-color: #F8FAFC;
+}
+
+/* Nav Item */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 8px;
+  color: #94A3B8;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 4px;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+.nav-item.active {
+  background: linear-gradient(90deg, rgba(0, 180, 216, 0.25) 0%, rgba(0, 119, 182, 0.15) 100%);
+  color: #38BDF8;
+  border-left: 3px solid #00B4D8;
+}
+
+/* Leaflet Container Styling */
+.leaflet-container {
+  width: 100% !important;
+  height: 520px !important;
+  min-height: 520px !important;
+  border-radius: 0 0 12px 12px;
+  position: relative;
+  z-index: 1;
+  background-color: #E2E8F0;
+}

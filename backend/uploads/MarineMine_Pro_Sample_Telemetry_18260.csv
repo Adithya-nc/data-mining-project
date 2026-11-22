@@ -1,0 +1,121 @@
+record_id,observation_date,latitude,longitude,region,pollution_type,pollution_value,pollution_unit,temperature_c,ph,dissolved_oxygen_mg_l,salinity_psu,turbidity_ntu,weather_condition,ocean_condition,source
+MT-0001,2025-10-11,19.086665,72.841301,Mumbai Coast,Chemical,1.049,mg_per_L,21.54,7.44,6.23,32.93,7.38,Rainy,Moderate,Synthetic demonstration telemetry
+MT-0002,2025-09-29,15.326523,74.126311,Goa Coast,Chemical,0.671,mg_per_L,24.59,8.03,5.14,35.08,7.2,Rainy,Moderate,Synthetic demonstration telemetry
+MT-0003,2025-09-14,9.973989,76.261891,Kochi Coast,Sewage,1.638,mg_per_L,28.49,8.03,6.51,34.28,5.0,Sunny,Moderate,Synthetic demonstration telemetry
+MT-0004,2025-06-06,13.122214,80.266712,Chennai Coast,Sewage,1.893,mg_per_L,28.82,8.16,6.64,32.3,8.81,Windy,Calm,Synthetic demonstration telemetry
+MT-0005,2025-03-07,17.7173,83.226326,Visakhapatnam Coast,Heavy Metals,0.383,ug_per_L,27.81,8.12,4.64,32.92,5.18,Sunny,Calm,Synthetic demonstration telemetry
+MT-0006,2025-06-05,12.966423,74.825696,Mangaluru Coast,Sewage,4.565,mg_per_L,26.06,7.96,6.69,34.78,12.7,Cloudy,Moderate,Synthetic demonstration telemetry
+MT-0007,2025-10-09,19.106029,72.871004,Mumbai Coast,Heavy Metals,6.002,ug_per_L,24.43,8.07,6.24,34.74,5.37,Windy,Moderate,Synthetic demonstration telemetry
+MT-0008,2025-02-25,15.288473,74.139987,Goa Coast,Oil,2.794,ug_per_L,25.93,7.48,6.59,32.66,7.54,Cloudy,Rough,Synthetic demonstration telemetry
+MT-0009,2025-04-10,9.954488,76.263853,Kochi Coast,Oil,50.792,ug_per_L,22.28,7.39,4.78,31.7,9.87,Cloudy,Calm,Synthetic demonstration telemetry
+MT-0010,2025-08-25,13.128173,80.258231,Chennai Coast,Oil,36.5,ug_per_L,26.42,7.57,5.76,35.01,1.45,Windy,Moderate,Synthetic demonstration telemetry
+MT-0011,2025-09-08,17.666005,83.167888,Visakhapatnam Coast,Plastic,22.145,items_per_m3,27.65,7.91,7.7,33.07,3.15,Windy,Calm,Synthetic demonstration telemetry
+MT-0012,2025-02-17,12.961672,74.885229,Mangaluru Coast,Sewage,0.917,mg_per_L,23.67,7.68,5.17,32.8,2.19,Cloudy,Calm,Synthetic demonstration telemetry
+MT-0013,2025-09-16,19.024522,72.842155,Mumbai Coast,Chemical,0.133,mg_per_L,32.59,8.6,6.51,31.72,0.82,Windy,Calm,Synthetic demonstration telemetry
+MT-0014,2025-01-08,15.284762,74.102577,Goa Coast,Oil,66.277,ug_per_L,27.44,7.84,5.06,30.49,5.11,Sunny,Moderate,Synthetic demonstration telemetry
+MT-0015,2025-02-05,9.993078,76.27186,Kochi Coast,Oil,73.365,ug_per_L,23.68,7.56,5.37,37.33,3.82,Windy,Calm,Synthetic demonstration telemetry
+MT-0016,2025-06-19,13.115305,80.284173,Chennai Coast,Sewage,2.122,mg_per_L,25.17,8.06,5.65,31.29,2.43,Sunny,Rough,Synthetic demonstration telemetry
+MT-0017,2025-06-21,17.6924,83.214348,Visakhapatnam Coast,Plastic,10.846,items_per_m3,27.61,7.76,7.21,34.27,19.4,Sunny,Rough,Synthetic demonstration telemetry
+MT-0018,2025-10-02,12.866214,74.913782,Mangaluru Coast,Plastic,6.292,items_per_m3,25.93,8.41,4.99,31.89,11.56,Cloudy,Moderate,Synthetic demonstration telemetry
+MT-0019,2025-03-17,19.070279,72.889515,Mumbai Coast,Plastic,5.691,items_per_m3,28.8,7.18,6.05,31.98,2.59,Windy,Rough,Synthetic demonstration telemetry
+MT-0020,2025-02-13,15.331357,74.077576,Goa Coast,Heavy Metals,3.269,ug_per_L,28.37,7.73,5.77,35.3,10.81,Rainy,Calm,Synthetic demonstration telemetry
+MT-0021,2025-07-03,9.906842,76.259465,Kochi Coast,Chemical,0.955,mg_per_L,23.96,7.93,6.33,38.0,23.14,Rainy,Rough,Synthetic demonstration telemetry
+MT-0022,2025-01-06,13.03148,80.250025,Chennai Coast,Heavy Metals,2.907,ug_per_L,24.96,7.67,3.95,33.21,3.04,Windy,Moderate,Synthetic demonstration telemetry
+MT-0023,2025-08-04,17.66827,83.18781,Visakhapatnam Coast,Plastic,26.29,items_per_m3,22.89,8.6,4.81,31.53,22.68,Windy,Calm,Synthetic demonstration telemetry
+MT-0024,2025-09-30,12.901211,74.867954,Mangaluru Coast,Plastic,10.689,items_per_m3,26.31,8.17,6.53,32.82,6.76,Rainy,Calm,Synthetic demonstration telemetry
+MT-0025,2025-01-18,19.066676,72.885826,Mumbai Coast,Heavy Metals,14.86,ug_per_L,29.84,7.95,6.45,33.6,7.47,Rainy,Calm,Synthetic demonstration telemetry
+MT-0026,2025-07-08,15.295895,74.197261,Goa Coast,Sewage,3.388,mg_per_L,24.86,7.51,7.29,33.97,10.41,Windy,Rough,Synthetic demonstration telemetry
+MT-0027,2025-09-22,9.947105,76.228435,Kochi Coast,Oil,62.579,ug_per_L,27.15,7.8,6.0,33.05,8.33,Windy,Moderate,Synthetic demonstration telemetry
+MT-0028,2025-03-29,13.07441,80.276878,Chennai Coast,Oil,12.042,ug_per_L,22.08,8.01,7.83,30.74,13.25,Cloudy,Moderate,Synthetic demonstration telemetry
+MT-0029,2025-11-10,17.649949,83.206794,Visakhapatnam Coast,Sewage,7.339,mg_per_L,31.85,8.31,6.54,36.64,10.13,Rainy,Moderate,Synthetic demonstration telemetry
+MT-0030,2025-08-31,12.916429,74.83159,Mangaluru Coast,Plastic,7.667,items_per_m3,29.19,7.83,7.27,34.85,22.49,Rainy,Rough,Synthetic demonstration telemetry
+MT-0031,2025-09-22,19.073657,72.83668,Mumbai Coast,Plastic,18.623,items_per_m3,28.79,7.66,5.09,33.56,2.6,Rainy,Moderate,Synthetic demonstration telemetry
+MT-0032,2025-07-08,15.276469,74.164436,Goa Coast,Plastic,15.048,items_per_m3,27.85,7.93,6.51,36.41,11.18,Rainy,Calm,Synthetic demonstration telemetry
+MT-0033,2025-09-13,9.944092,76.29693,Kochi Coast,Heavy Metals,16.847,ug_per_L,29.99,7.98,6.33,33.99,3.67,Cloudy,Calm,Synthetic demonstration telemetry
+MT-0034,2025-05-25,13.096119,80.305694,Chennai Coast,Chemical,0.581,mg_per_L,31.15,7.64,5.28,33.86,13.1,Rainy,Rough,Synthetic demonstration telemetry
+MT-0035,2025-02-09,17.716788,83.247964,Visakhapatnam Coast,Chemical,1.277,mg_per_L,26.43,7.2,7.7,32.68,8.07,Rainy,Rough,Synthetic demonstration telemetry
+MT-0036,2025-05-26,12.870292,74.799955,Mangaluru Coast,Oil,24.852,ug_per_L,28.47,8.0,4.69,29.34,7.77,Windy,Rough,Synthetic demonstration telemetry
+MT-0037,2025-01-30,19.100568,72.882538,Mumbai Coast,Sewage,7.187,mg_per_L,28.48,7.65,5.92,33.85,12.91,Cloudy,Moderate,Synthetic demonstration telemetry
+MT-0038,2025-01-18,15.289996,74.119886,Goa Coast,Plastic,18.966,items_per_m3,23.37,7.38,3.77,32.28,12.36,Sunny,Rough,Synthetic demonstration telemetry
+MT-0039,2025-01-14,9.969323,76.313769,Kochi Coast,Chemical,0.311,mg_per_L,30.79,7.93,5.26,32.43,1.95,Sunny,Calm,Synthetic demonstration telemetry
+MT-0040,2025-07-21,13.110825,80.330927,Chennai Coast,Sewage,0.531,mg_per_L,24.09,8.07,5.97,30.2,13.78,Windy,Calm,Synthetic demonstration telemetry
+MT-0041,2025-09-16,17.649359,83.1956,Visakhapatnam Coast,Chemical,0.958,mg_per_L,27.92,8.03,7.42,32.88,1.95,Cloudy,Moderate,Synthetic demonstration telemetry
+MT-0042,2025-06-17,12.953111,74.869418,Mangaluru Coast,Chemical,0.612,mg_per_L,32.46,8.6,6.17,33.79,15.03,Windy,Moderate,Synthetic demonstration telemetry
+MT-0043,2025-05-15,19.075095,72.888687,Mumbai Coast,Plastic,8.094,items_per_m3,21.2,7.51,5.64,32.97,23.85,Sunny,Moderate,Synthetic demonstration telemetry
+MT-0044,2025-08-02,15.31147,74.109752,Goa Coast,Chemical,0.982,mg_per_L,28.73,7.78,7.16,31.44,7.5,Windy,Moderate,Synthetic demonstration telemetry
+MT-0045,2025-10-31,9.981363,76.270503,Kochi Coast,Plastic,16.102,items_per_m3,26.52,7.63,6.53,31.97,11.73,Windy,Calm,Synthetic demonstration telemetry
+MT-0046,2025-02-27,13.072681,80.286589,Chennai Coast,Chemical,0.478,mg_per_L,21.87,7.78,4.11,30.81,17.68,Sunny,Moderate,Synthetic demonstration telemetry
+MT-0047,2025-11-13,17.634212,83.114741,Visakhapatnam Coast,Chemical,1.493,mg_per_L,28.22,7.7,6.57,30.69,5.96,Cloudy,Calm,Synthetic demonstration telemetry
+MT-0048,2025-02-24,12.941778,74.868063,Mangaluru Coast,Chemical,0.257,mg_per_L,29.51,8.47,5.13,31.9,17.4,Rainy,Moderate,Synthetic demonstration telemetry
+MT-0049,2025-09-07,19.060511,72.928627,Mumbai Coast,Heavy Metals,10.958,ug_per_L,31.38,7.77,5.16,32.69,10.22,Sunny,Calm,Synthetic demonstration telemetry
+MT-0050,2025-06-12,15.280443,74.164173,Goa Coast,Sewage,0.765,mg_per_L,22.28,7.61,6.35,33.18,6.17,Rainy,Calm,Synthetic demonstration telemetry
+MT-0051,2025-04-22,9.895901,76.29204,Kochi Coast,Heavy Metals,21.143,ug_per_L,28.56,8.0,8.14,33.34,5.91,Sunny,Rough,Synthetic demonstration telemetry
+MT-0052,2025-05-12,13.039143,80.239592,Chennai Coast,Plastic,27.685,items_per_m3,27.14,7.63,7.0,34.83,6.63,Rainy,Moderate,Synthetic demonstration telemetry
+MT-0053,2025-01-03,17.693379,83.167816,Visakhapatnam Coast,Chemical,0.424,mg_per_L,24.48,7.97,4.65,35.91,16.57,Rainy,Rough,Synthetic demonstration telemetry
+MT-0054,2025-09-16,12.829753,74.815528,Mangaluru Coast,Sewage,6.948,mg_per_L,29.0,8.6,4.92,31.99,8.83,Sunny,Rough,Synthetic demonstration telemetry
+MT-0055,2025-09-05,19.084716,72.941445,Mumbai Coast,Heavy Metals,8.793,ug_per_L,22.38,7.45,5.68,32.56,12.85,Cloudy,Rough,Synthetic demonstration telemetry
+MT-0056,2025-01-28,15.317339,74.103786,Goa Coast,Sewage,4.488,mg_per_L,25.22,8.09,6.86,34.31,1.52,Cloudy,Calm,Synthetic demonstration telemetry
+MT-0057,2025-09-13,9.939435,76.217469,Kochi Coast,Sewage,6.937,mg_per_L,23.41,8.15,6.34,32.39,18.54,Cloudy,Calm,Synthetic demonstration telemetry
+MT-0058,2025-01-10,13.092112,80.249012,Chennai Coast,Chemical,0.608,mg_per_L,25.85,8.38,5.06,29.16,20.18,Windy,Calm,Synthetic demonstration telemetry
+MT-0059,2025-04-01,17.619011,83.207633,Visakhapatnam Coast,Plastic,26.824,items_per_m3,23.88,8.1,6.62,30.81,11.98,Rainy,Calm,Synthetic demonstration telemetry
+MT-0060,2025-07-09,12.902294,74.85103,Mangaluru Coast,Plastic,29.932,items_per_m3,23.44,7.29,6.26,32.8,22.8,Sunny,Moderate,Synthetic demonstration telemetry
+MT-0061,2025-01-06,19.037369,72.898254,Mumbai Coast,Chemical,0.685,mg_per_L,27.5,8.32,5.78,30.45,7.37,Windy,Calm,Synthetic demonstration telemetry
+MT-0062,2025-04-18,15.296444,74.064302,Goa Coast,Chemical,1.365,mg_per_L,25.54,7.0,6.88,33.99,4.21,Cloudy,Calm,Synthetic demonstration telemetry
+MT-0063,2025-07-05,9.943427,76.350691,Kochi Coast,Plastic,24.175,items_per_m3,26.53,8.19,6.73,35.75,4.96,Rainy,Rough,Synthetic demonstration telemetry
+MT-0064,2025-07-05,13.067461,80.253931,Chennai Coast,Plastic,4.853,items_per_m3,25.72,7.75,6.41,33.06,13.97,Rainy,Calm,Synthetic demonstration telemetry
+MT-0065,2025-01-22,17.659415,83.137288,Visakhapatnam Coast,Chemical,0.688,mg_per_L,26.44,8.29,5.85,31.64,7.16,Windy,Rough,Synthetic demonstration telemetry
+MT-0066,2025-05-11,12.88223,74.875549,Mangaluru Coast,Chemical,0.631,mg_per_L,26.96,8.15,5.06,33.48,6.37,Sunny,Calm,Synthetic demonstration telemetry
+MT-0067,2025-10-05,19.100001,72.865417,Mumbai Coast,Chemical,0.398,mg_per_L,30.16,7.1,4.6,31.84,18.64,Sunny,Rough,Synthetic demonstration telemetry
+MT-0068,2025-08-23,15.259394,74.084816,Goa Coast,Heavy Metals,3.931,ug_per_L,28.54,7.83,6.38,33.78,12.57,Sunny,Calm,Synthetic demonstration telemetry
+MT-0069,2025-07-07,9.852546,76.302361,Kochi Coast,Plastic,18.525,items_per_m3,21.79,7.93,7.03,36.74,10.66,Windy,Rough,Synthetic demonstration telemetry
+MT-0070,2025-05-30,13.083101,80.260226,Chennai Coast,Chemical,0.909,mg_per_L,32.0,8.3,5.18,35.04,11.54,Cloudy,Calm,Synthetic demonstration telemetry
+MT-0071,2025-01-26,17.709038,83.2444,Visakhapatnam Coast,Heavy Metals,0.94,ug_per_L,22.01,7.93,5.54,31.2,20.95,Windy,Calm,Synthetic demonstration telemetry
+MT-0072,2025-02-11,12.923032,74.903272,Mangaluru Coast,Oil,12.354,ug_per_L,23.94,8.04,6.16,31.16,7.19,Rainy,Rough,Synthetic demonstration telemetry
+MT-0073,2025-10-24,19.107297,72.878101,Mumbai Coast,Chemical,1.322,mg_per_L,26.43,7.52,5.95,32.16,2.51,Cloudy,Moderate,Synthetic demonstration telemetry
+MT-0074,2025-07-16,15.236765,74.119706,Goa Coast,Plastic,8.476,items_per_m3,29.87,7.91,5.25,31.55,9.51,Rainy,Rough,Synthetic demonstration telemetry
+MT-0075,2025-11-21,9.969699,76.262672,Kochi Coast,Sewage,3.412,mg_per_L,27.61,7.83,5.52,33.96,5.04,Windy,Rough,Synthetic demonstration telemetry
+MT-0076,2025-02-19,13.06863,80.279244,Chennai Coast,Chemical,1.443,mg_per_L,25.65,8.4,4.94,29.69,1.21,Rainy,Moderate,Synthetic demonstration telemetry
+MT-0077,2025-08-30,17.682684,83.260997,Visakhapatnam Coast,Sewage,6.285,mg_per_L,31.37,7.51,5.72,32.14,3.57,Sunny,Calm,Synthetic demonstration telemetry
+MT-0078,2025-11-20,12.978409,74.844242,Mangaluru Coast,Oil,30.794,ug_per_L,31.91,7.87,6.23,34.16,35.0,Cloudy,Moderate,Synthetic demonstration telemetry
+MT-0079,2025-06-04,19.109915,72.865036,Mumbai Coast,Chemical,0.303,mg_per_L,27.09,8.0,6.11,34.11,10.04,Sunny,Rough,Synthetic demonstration telemetry
+MT-0080,2025-09-06,15.264929,74.07352,Goa Coast,Chemical,1.323,mg_per_L,25.06,8.19,4.76,32.77,4.7,Sunny,Calm,Synthetic demonstration telemetry
+MT-0081,2025-08-04,9.895924,76.29265,Kochi Coast,Oil,40.145,ug_per_L,21.52,7.9,5.88,33.31,7.31,Sunny,Rough,Synthetic demonstration telemetry
+MT-0082,2025-01-24,13.043811,80.229681,Chennai Coast,Chemical,0.215,mg_per_L,30.49,7.75,3.6,30.43,3.78,Rainy,Calm,Synthetic demonstration telemetry
+MT-0083,2025-10-09,17.68815,83.207589,Visakhapatnam Coast,Plastic,18.358,items_per_m3,24.59,8.07,4.56,34.2,8.04,Sunny,Calm,Synthetic demonstration telemetry
+MT-0084,2025-10-23,12.892323,74.92811,Mangaluru Coast,Oil,8.931,ug_per_L,27.2,7.52,5.35,34.21,10.93,Windy,Rough,Synthetic demonstration telemetry
+MT-0085,2025-06-25,19.116513,72.927971,Mumbai Coast,Chemical,0.38,mg_per_L,21.73,7.79,5.23,33.71,4.76,Cloudy,Moderate,Synthetic demonstration telemetry
+MT-0086,2025-05-24,15.29336,74.138483,Goa Coast,Heavy Metals,3.468,ug_per_L,27.02,8.06,7.27,36.47,9.29,Windy,Calm,Synthetic demonstration telemetry
+MT-0087,2025-02-09,9.928124,76.30021,Kochi Coast,Oil,73.431,ug_per_L,29.48,8.07,7.3,34.02,5.69,Windy,Rough,Synthetic demonstration telemetry
+MT-0088,2025-06-04,13.096101,80.143006,Chennai Coast,Oil,13.077,ug_per_L,28.34,7.49,5.39,35.97,5.12,Sunny,Rough,Synthetic demonstration telemetry
+MT-0089,2025-11-01,17.701081,83.275091,Visakhapatnam Coast,Oil,35.601,ug_per_L,26.69,7.89,4.74,33.04,4.1,Windy,Calm,Synthetic demonstration telemetry
+MT-0090,2025-05-10,12.904202,74.852284,Mangaluru Coast,Chemical,1.384,mg_per_L,24.2,7.54,7.2,32.76,2.09,Rainy,Rough,Synthetic demonstration telemetry
+MT-0091,2025-08-12,19.022425,72.885732,Mumbai Coast,Plastic,25.688,items_per_m3,28.77,7.41,6.43,32.96,5.13,Cloudy,Rough,Synthetic demonstration telemetry
+MT-0092,2025-05-14,15.362103,74.170018,Goa Coast,Oil,45.384,ug_per_L,29.15,7.94,6.23,34.98,7.15,Rainy,Moderate,Synthetic demonstration telemetry
+MT-0093,2025-01-31,9.953387,76.267405,Kochi Coast,Heavy Metals,16.754,ug_per_L,25.95,8.16,6.48,31.28,18.45,Windy,Rough,Synthetic demonstration telemetry
+MT-0094,2025-02-12,13.046123,80.234963,Chennai Coast,Plastic,9.704,items_per_m3,26.06,8.12,6.44,34.07,9.94,Rainy,Rough,Synthetic demonstration telemetry
+MT-0095,2025-03-26,17.674045,83.142193,Visakhapatnam Coast,Sewage,5.041,mg_per_L,29.93,8.32,6.3,32.6,10.44,Rainy,Rough,Synthetic demonstration telemetry
+MT-0096,2025-11-05,12.948615,74.836478,Mangaluru Coast,Plastic,25.912,items_per_m3,24.33,8.24,6.8,33.68,4.03,Cloudy,Rough,Synthetic demonstration telemetry
+MT-0097,2025-11-19,19.094991,72.844253,Mumbai Coast,Heavy Metals,18.676,ug_per_L,26.43,7.94,8.55,31.02,18.75,Rainy,Calm,Synthetic demonstration telemetry
+MT-0098,2025-05-16,15.303442,74.139565,Goa Coast,Oil,18.29,ug_per_L,25.72,8.3,5.46,33.39,3.01,Sunny,Rough,Synthetic demonstration telemetry
+MT-0099,2025-02-08,9.928493,76.260409,Kochi Coast,Sewage,3.181,mg_per_L,22.54,7.58,6.33,35.87,18.38,Windy,Calm,Synthetic demonstration telemetry
+MT-0100,2025-10-20,13.097841,80.272867,Chennai Coast,Chemical,0.999,mg_per_L,23.09,7.36,6.75,33.0,4.66,Cloudy,Rough,Synthetic demonstration telemetry
+MT-0101,2025-11-26,17.693113,83.195538,Visakhapatnam Coast,Plastic,16.461,items_per_m3,31.42,8.07,7.07,35.74,15.5,Sunny,Calm,Synthetic demonstration telemetry
+MT-0102,2025-09-17,12.932288,74.817593,Mangaluru Coast,Oil,66.737,ug_per_L,24.78,8.36,6.94,36.18,6.08,Sunny,Rough,Synthetic demonstration telemetry
+MT-0103,2025-02-01,19.079571,72.880465,Mumbai Coast,Heavy Metals,4.007,ug_per_L,27.99,7.55,6.55,33.51,4.07,Sunny,Calm,Synthetic demonstration telemetry
+MT-0104,2025-02-25,15.289845,74.185997,Goa Coast,Oil,12.602,ug_per_L,21.13,7.59,5.84,32.27,17.85,Rainy,Rough,Synthetic demonstration telemetry
+MT-0105,2025-06-16,9.93336,76.268603,Kochi Coast,Oil,60.271,ug_per_L,31.81,7.09,4.1,32.52,7.55,Windy,Calm,Synthetic demonstration telemetry
+MT-0106,2025-09-29,13.069251,80.306367,Chennai Coast,Plastic,13.158,items_per_m3,29.7,8.0,5.54,34.76,8.09,Windy,Rough,Synthetic demonstration telemetry
+MT-0107,2025-03-14,17.601019,83.168881,Visakhapatnam Coast,Sewage,5.283,mg_per_L,26.29,7.37,5.11,31.95,30.56,Cloudy,Calm,Synthetic demonstration telemetry
+MT-0108,2025-06-10,12.901375,74.815778,Mangaluru Coast,Oil,21.555,ug_per_L,24.21,7.87,4.5,32.13,8.31,Sunny,Moderate,Synthetic demonstration telemetry
+MT-0109,2025-08-12,19.029783,72.907614,Mumbai Coast,Sewage,0.622,mg_per_L,26.97,7.42,5.78,34.16,11.34,Sunny,Moderate,Synthetic demonstration telemetry
+MT-0110,2025-01-20,15.334563,74.115017,Goa Coast,Chemical,0.331,mg_per_L,32.49,7.47,5.17,36.17,3.05,Sunny,Moderate,Synthetic demonstration telemetry
+MT-0111,2025-10-11,9.945908,76.263716,Kochi Coast,Sewage,2.631,mg_per_L,25.01,7.59,8.38,34.04,13.44,Windy,Rough,Synthetic demonstration telemetry
+MT-0112,2025-02-05,13.057726,80.17789,Chennai Coast,Sewage,1.011,mg_per_L,20.7,7.48,7.42,33.42,16.97,Sunny,Rough,Synthetic demonstration telemetry
+MT-0113,2025-04-17,17.655269,83.236838,Visakhapatnam Coast,Plastic,28.562,items_per_m3,28.57,8.1,5.55,31.48,2.68,Cloudy,Rough,Synthetic demonstration telemetry
+MT-0114,2025-07-12,12.917128,74.867445,Mangaluru Coast,Sewage,1.112,mg_per_L,28.6,8.12,7.65,35.8,3.22,Rainy,Moderate,Synthetic demonstration telemetry
+MT-0115,2025-11-02,19.112571,72.88008,Mumbai Coast,Oil,74.69,ug_per_L,26.52,7.35,7.07,36.23,3.9,Cloudy,Moderate,Synthetic demonstration telemetry
+MT-0116,2025-05-05,15.277303,74.151107,Goa Coast,Plastic,4.65,items_per_m3,25.65,8.25,6.2,34.93,5.28,Rainy,Calm,Synthetic demonstration telemetry
+MT-0117,2025-07-17,9.901938,76.290473,Kochi Coast,Plastic,20.731,items_per_m3,31.3,8.41,5.73,34.17,4.55,Rainy,Calm,Synthetic demonstration telemetry
+MT-0118,2025-01-09,13.139402,80.283429,Chennai Coast,Plastic,22.817,items_per_m3,20.92,7.2,6.9,33.61,8.92,Windy,Rough,Synthetic demonstration telemetry
+MT-0119,2025-03-31,17.756923,83.247347,Visakhapatnam Coast,Plastic,6.496,items_per_m3,25.9,7.15,6.36,35.02,1.74,Windy,Calm,Synthetic demonstration telemetry
+MT-0120,2025-05-04,12.880313,74.857872,Mangaluru Coast,Chemical,0.161,mg_per_L,28.72,8.16,5.85,29.03,3.24,Windy,Moderate,Synthetic demonstration telemetry

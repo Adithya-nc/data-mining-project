@@ -1,0 +1,176 @@
+/* ==========================================================================
+   MarineMine Pro — Dashboard & Module-Specific Styles
+   ========================================================================== */
+
+/* Chart Containers */
+.chart-container-sm {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+.chart-container-md {
+  position: relative;
+  height: 340px;
+  width: 100%;
+}
+
+.chart-container-lg {
+  position: relative;
+  height: 420px;
+  width: 100%;
+}
+
+/* Hotspot Leaflet Map */
+#hotspot-map {
+  width: 100%;
+  height: 540px !important;
+  min-height: 540px !important;
+  position: relative !important;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--border-color);
+  background: #0d1e35;
+  z-index: 1;
+}
+
+.leaflet-container {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  background: #091a30 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #ffffff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+}
+
+.leaflet-popup-tip {
+  background: #ffffff !important;
+}
+
+
+/* File Upload Dropzone */
+.dropzone-ocean {
+  border: 2px dashed rgba(0, 210, 255, 0.4);
+  background: rgba(0, 210, 255, 0.03);
+  border-radius: var(--border-radius-md);
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.dropzone-ocean:hover,
+.dropzone-ocean.dragover {
+  border-color: var(--accent-cyan);
+  background: rgba(0, 210, 255, 0.08);
+  box-shadow: inset 0 0 20px rgba(0, 210, 255, 0.15);
+}
+
+.dropzone-icon {
+  font-size: 3rem;
+  color: var(--accent-cyan);
+  margin-bottom: 1rem;
+}
+
+/* Badges */
+.badge-clean {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.badge-risk {
+  background: rgba(244, 63, 94, 0.15);
+  color: var(--accent-rose);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-amber);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* Confusion Matrix Grid */
+.confusion-matrix-grid {
+  display: grid;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.cm-cell {
+  padding: 12px;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+}
+
+/* Markdown Report Viewer */
+.report-viewer {
+  background: #091a30;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  max-height: 550px;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: #d1e4fc;
+}
+
+/* Pulse animation for active dataset indicators */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.6);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgba(0, 210, 255, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0);
+  }
+}
+
+.pulse-active {
+  animation: pulseGlow 2s infinite;
+}
+
+/* Preprocessing Step Pills */
+.step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.step-pill.completed {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: var(--accent-green);
+}
