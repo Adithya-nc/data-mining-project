@@ -17,6 +17,8 @@
     ctx: null,
     isPlaying: false,
     noiseNode: null,
+    lfo: null,
+    lfoGain: null,
     gainNode: null,
     filterNode: null,
 
@@ -29,7 +31,7 @@
 
     toggle() {
       this.init();
-      if (this.ctx.state === 'suspended') {
+      if (this.ctx && this.ctx.state === 'suspended') {
         this.ctx.resume();
       }
       if (this.isPlaying) {
@@ -43,6 +45,9 @@
     start() {
       if (this.isPlaying) return;
       const ctx = this.ctx;
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
 
       // Generate brown/pink noise buffer for deep ocean swell
       const bufferSize = ctx.sampleRate * 2;
@@ -67,17 +72,17 @@
       this.filterNode.Q.setValueAtTime(2.8, ctx.currentTime);
 
       // Low-Frequency Oscillator (LFO) for undulating waves
-      const lfo = ctx.createOscillator();
-      const lfoGain = ctx.createGain();
-      lfo.frequency.setValueAtTime(0.18, ctx.currentTime);
-      lfoGain.gain.setValueAtTime(45, ctx.currentTime);
-      lfo.connect(lfoGain);
-      lfoGain.connect(this.filterNode.frequency);
-      lfo.start();
+      this.lfo = ctx.createOscillator();
+      this.lfoGain = ctx.createGain();
+      this.lfo.frequency.setValueAtTime(0.18, ctx.currentTime);
+      this.lfoGain.gain.setValueAtTime(45, ctx.currentTime);
+      this.lfo.connect(this.lfoGain);
+      this.lfoGain.connect(this.filterNode.frequency);
+      this.lfo.start();
 
       this.gainNode = ctx.createGain();
       this.gainNode.gain.setValueAtTime(0.001, ctx.currentTime);
-      this.gainNode.gain.exponentialRampToValueAtTime(0.22, ctx.currentTime + 1.2);
+      this.gainNode.gain.linearRampToValueAtTime(0.22, ctx.currentTime + 0.6);
 
       this.noiseNode.connect(this.filterNode);
       this.filterNode.connect(this.gainNode);
@@ -88,18 +93,41 @@
     },
 
     stop() {
-      if (!this.isPlaying || !this.gainNode) return;
+      this.isPlaying = false;
       const ctx = this.ctx;
-      this.gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
-      setTimeout(() => {
-        try {
-          if (this.noiseNode) {
-            this.noiseNode.stop();
-            this.noiseNode.disconnect();
-          }
-        } catch (e) {}
-        this.isPlaying = false;
-      }, 700);
+      if (!ctx) return;
+
+      try {
+        if (this.gainNode) {
+          this.gainNode.gain.cancelScheduledValues(ctx.currentTime);
+          this.gainNode.gain.setValueAtTime(0, ctx.currentTime);
+        }
+        if (this.noiseNode) {
+          this.noiseNode.stop();
+          this.noiseNode.disconnect();
+          this.noiseNode = null;
+        }
+        if (this.lfo) {
+          this.lfo.stop();
+          this.lfo.disconnect();
+          this.lfo = null;
+        }
+        if (this.lfoGain) {
+          this.lfoGain.disconnect();
+          this.lfoGain = null;
+        }
+        if (this.filterNode) {
+          this.filterNode.disconnect();
+          this.filterNode = null;
+        }
+        if (this.gainNode) {
+          this.gainNode.disconnect();
+          this.gainNode = null;
+        }
+        ctx.suspend();
+      } catch (e) {
+        console.warn('Hydrophone audio teardown exception:', e);
+      }
     },
 
     playSonarPing() {

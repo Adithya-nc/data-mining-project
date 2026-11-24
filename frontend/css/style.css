@@ -103,33 +103,43 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: 500;
 }
 
-/* Tables and cells */
-.table, .table-ocean, table {
+/* Tables and cells — Comprehensive Bootstrap & Ocean Override */
+.table, .table-ocean, table, .table-responsive table {
   color: #e2f1f8 !important;
   --bs-table-color: #e2f1f8 !important;
   --bs-table-striped-color: #e2f1f8 !important;
   --bs-table-hover-color: #ffffff !important;
   --bs-table-bg: transparent !important;
   --bs-table-border-color: rgba(56, 224, 242, 0.15) !important;
+  --bs-table-striped-bg: rgba(0, 187, 249, 0.04) !important;
+  --bs-table-active-bg: rgba(0, 245, 212, 0.1) !important;
+  --bs-table-active-color: #ffffff !important;
 }
 
 .table > :not(caption) > * > *,
-.table-ocean > :not(caption) > * > * {
+.table-ocean > :not(caption) > * > *,
+.table-responsive table > :not(caption) > * > *,
+table > thead > tr > th,
+table > tbody > tr > td,
+#preview-table-head th,
+#preview-table-body td {
   color: #e2f1f8 !important;
   background-color: transparent !important;
   border-color: rgba(56, 224, 242, 0.15) !important;
+  box-shadow: none !important;
 }
 
-.table th, .table-ocean th, th {
+.table th, .table-ocean th, th, thead th, #preview-table-head th {
   color: #00f5d4 !important;
   font-weight: 600 !important;
+  background-color: rgba(4, 28, 54, 0.85) !important;
 }
 
-.table td, .table-ocean td, td {
-  color: #d8ecf8 !important;
+.table td, .table-ocean td, td, tbody td, #preview-table-body td {
+  color: #e2f1f8 !important;
 }
 
-.table tr:hover > *, .table-ocean tr:hover > * {
+.table tr:hover > *, .table-ocean tr:hover > *, tbody tr:hover > td, #preview-table-body tr:hover > td {
   color: #ffffff !important;
   background-color: rgba(0, 245, 212, 0.08) !important;
 }
@@ -619,35 +629,40 @@ input::placeholder, textarea::placeholder, .form-control::placeholder {
   color: #fff;
 }
 
-/* Data Tables */
+/* Data Tables & Table Ocean Styling */
 .table-ocean {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  color: var(--text-main);
+  color: #e2f1f8 !important;
   font-size: 0.85rem;
+  background-color: transparent !important;
 }
 
 .table-ocean th {
-  background: rgba(0, 210, 255, 0.08);
-  color: var(--accent-cyan);
-  font-weight: 600;
+  background: rgba(4, 28, 54, 0.85) !important;
+  color: #00f5d4 !important;
+  font-weight: 600 !important;
   text-transform: uppercase;
   font-size: 0.72rem;
   letter-spacing: 0.5px;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(56, 224, 242, 0.25) !important;
   text-align: left;
 }
 
 .table-ocean td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: transparent;
+  border-bottom: 1px solid rgba(56, 224, 242, 0.1) !important;
+  background-color: transparent !important;
+  color: #e2f1f8 !important;
+  box-shadow: none !important;
 }
 
 .table-ocean tr:hover td {
-  background: rgba(0, 210, 255, 0.04);
+  background: rgba(0, 245, 212, 0.08) !important;
+  color: #ffffff !important;
+}
 }
 
 /* Toast Notifications */
