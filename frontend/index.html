@@ -24,6 +24,12 @@
 </head>
 <body>
 
+  <!-- Animated Deep Ocean Caustics & Ambient Marine Canvas -->
+  <canvas id="ocean-canvas"></canvas>
+  <canvas id="bubble-canvas"></canvas>
+  <canvas id="rov-spotlight-canvas" class="rov-overlay-canvas"></canvas>
+  <div class="ocean-vignette"></div>
+
 <div class="app-container">
   <!-- ==================================================================== -->
   <!-- Left Sidebar Navigation (12 Modules)                                 -->
@@ -121,6 +127,12 @@
       </div>
 
       <div class="navbar-actions">
+        <button id="btn-rov-mode" class="btn-navbar-tool" title="Submersible ROV Abyssal Headlight">
+          🔦 <span class="d-none d-lg-inline">ROV Spotlight</span>
+        </button>
+        <button id="btn-hydrophone" class="btn-navbar-tool" title="Toggle Synthesized Web Audio Hydrophone Ambience">
+          🎧 <span id="hydrophone-status" class="d-none d-lg-inline">Hydrophone</span>
+        </button>
         <div id="navbar-dataset-pill" class="dataset-pill" style="display: none;">
           <span class="status-dot"></span> Loading...
         </div>
@@ -134,10 +146,65 @@
     <!-- Page Content Container -->
     <div class="page-container">
       
+      <!-- Real-time Animated Gerstner Surface Wave Header -->
+      <div class="surface-wave-wrapper rounded-3">
+        <canvas id="surface-wave-canvas"></canvas>
+        <div class="wave-controls-overlay">
+          <span class="wave-badge">🌊 Beaufort Sea State 3 • Animated Gerstner Swell</span>
+          <div class="d-flex align-items-center gap-2">
+            <span class="small text-muted font-monospace">Wind Speed:</span>
+            <input type="range" id="wave-wind-slider" min="5" max="45" value="16" class="form-range wave-range" title="Adjust ocean wind & wave dynamics" />
+            <span id="wave-wind-val" class="badge bg-dark font-monospace text-info">16 kts</span>
+          </div>
+        </div>
+      </div>
+
       <!-- ================================================================ -->
       <!-- 1. DASHBOARD MODULE                                              -->
       <!-- ================================================================ -->
       <section id="section-dashboard" class="page-section active">
+        <!-- Live Client-Side CSV Drag-and-Drop Mini-Auditor -->
+        <div class="ocean-card mb-4 border-info">
+          <div class="card-header-custom">
+            <div class="d-flex align-items-center gap-2">
+              <span style="font-size: 1.25rem;">⚡</span>
+              <h2 class="card-title-custom m-0">Live Client-Side CSV Mini-Auditor & In-Browser Correlation Heatmap</h2>
+            </div>
+            <button id="btn-mini-auditor-sample" class="btn-ocean-secondary btn-sm py-1">
+              🌊 Quick Load Ocean Sample
+            </button>
+          </div>
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-5">
+              <div id="mini-auditor-dropzone" class="mini-auditor-dropzone">
+                <div style="font-size: 2rem;" class="mb-2">📥</div>
+                <div class="fw-bold text-white mb-1">Drop any .csv here or click to browse</div>
+                <div class="small text-muted">Audits rows, missingness %, and computes real-time Pearson correlations 100% in-browser!</div>
+                <input type="file" id="mini-auditor-file-input" accept=".csv" class="d-none" />
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div id="mini-auditor-results" style="display: none;">
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                  <span class="badge bg-dark border border-secondary font-monospace">File: <span id="auditor-file-name" class="text-info">-</span></span>
+                  <span class="badge bg-dark border border-secondary font-monospace">Rows: <span id="auditor-rows-count" class="text-white">-</span></span>
+                  <span class="badge bg-dark border border-secondary font-monospace">Cols: <span id="auditor-cols-count" class="text-white">-</span></span>
+                  <span class="badge bg-dark border border-secondary font-monospace">Numeric: <span id="auditor-numeric-count" class="text-success">-</span></span>
+                  <span class="badge bg-dark border border-secondary font-monospace">Categorical: <span id="auditor-cat-count" class="text-warning">-</span></span>
+                  <span class="badge bg-dark border border-secondary font-monospace">Missing: <span id="auditor-missing-pct" class="text-danger">-</span></span>
+                </div>
+                <div class="table-responsive">
+                  <table class="corr-matrix-table mb-2">
+                    <thead id="auditor-heatmap-head"></thead>
+                    <tbody id="auditor-heatmap-body"></tbody>
+                  </table>
+                </div>
+                <div id="auditor-heatmap-expl" class="small text-muted font-monospace"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Empty State -->
         <div id="dashboard-empty-state" class="ocean-card text-center py-5" style="display: none;">
           <div style="font-size: 3.5rem;" class="mb-3">🌊</div>
@@ -265,6 +332,20 @@
                   <canvas id="chart-dashboard-params"></canvas>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Bathymetric Depth Profile Cross-Section Chart -->
+          <div class="ocean-card mb-4">
+            <div class="card-header-custom">
+              <div class="d-flex align-items-center gap-2">
+                <span>🌊</span>
+                <h2 class="card-title-custom m-0">Bathymetric Depth Profile Cross-Section (0m Surface ➔ 4,000m Abyssal Floor)</h2>
+              </div>
+              <span class="card-subtitle-custom">Vertical water column: Temperature, Dissolved O₂, and Microplastic Settling</span>
+            </div>
+            <div class="chart-container-md">
+              <canvas id="chart-depth-profile"></canvas>
             </div>
           </div>
         </div>
@@ -923,21 +1004,33 @@
               <select id="assoc-features" class="ocean-select" multiple style="height: 90px;"></select>
             </div>
             <div class="col-md-8">
-              <div class="row g-2">
+              <div class="row g-2 mb-3">
                 <div class="col-md-4">
-                  <label class="form-label small text-muted">Min Support</label>
-                  <input type="number" id="assoc-min-support" class="ocean-input" value="0.05" step="0.01" min="0.01" max="0.5" />
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label small text-muted">Min Support</label>
+                    <span id="assoc-val-supp" class="small font-monospace text-info">5%</span>
+                  </div>
+                  <input type="range" id="assoc-min-support-slider" class="form-range" value="0.05" step="0.01" min="0.01" max="0.30" />
+                  <input type="hidden" id="assoc-min-support" value="0.05" />
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label small text-muted">Min Confidence</label>
-                  <input type="number" id="assoc-min-confidence" class="ocean-input" value="0.4" step="0.05" min="0.1" max="1.0" />
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label small text-muted">Min Confidence</label>
+                    <span id="assoc-val-conf" class="small font-monospace text-info">40%</span>
+                  </div>
+                  <input type="range" id="assoc-min-confidence-slider" class="form-range" value="0.4" step="0.05" min="0.1" max="1.0" />
+                  <input type="hidden" id="assoc-min-confidence" value="0.4" />
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label small text-muted">Min Lift</label>
-                  <input type="number" id="assoc-min-lift" class="ocean-input" value="1.0" step="0.1" min="1.0" max="5.0" />
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label small text-muted">Min Lift</label>
+                    <span id="assoc-val-lift" class="small font-monospace text-warning">1.0x</span>
+                  </div>
+                  <input type="range" id="assoc-min-lift-slider" class="form-range" value="1.0" step="0.1" min="1.0" max="4.0" />
+                  <input type="hidden" id="assoc-min-lift" value="1.0" />
                 </div>
               </div>
-              <button id="btn-run-association" class="btn-ocean-primary mt-3 w-100">
+              <button id="btn-run-association" class="btn-ocean-primary w-100">
                 🔗 Discover Association Patterns
               </button>
             </div>
@@ -945,11 +1038,22 @@
         </div>
 
         <div id="assoc-results-card" class="ocean-card" style="display: none;">
-          <div class="card-header-custom">
-            <h2 class="card-title-custom">📜 Discovered Environmental Rules</h2>
-            <span class="badge bg-info"><span id="assoc-rules-count">0</span> Rules Identified</span>
+          <div class="card-header-custom flex-wrap gap-2">
+            <div>
+              <h2 class="card-title-custom">📜 Interactive Apriori Association Rule Explorer</h2>
+              <span class="badge bg-info mt-1"><span id="assoc-rules-count">0</span> Rules Identified</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <input type="text" id="assoc-search-input" class="ocean-input py-1 px-3" style="width: 220px;" placeholder="Search rules (e.g. shipping)..." />
+            </div>
           </div>
           <p id="assoc-explanation" class="text-muted small mb-3"></p>
+
+          <!-- Visual Co-Occurring Rule Cards -->
+          <div class="mb-4">
+            <h6 class="text-info fw-bold small text-uppercase mb-2">✦ Highlighted Co-Occurring Pollution Patterns</h6>
+            <div id="assoc-rule-cards-container"></div>
+          </div>
           <div class="table-responsive">
             <table class="table table-ocean mb-0">
               <thead>
@@ -1074,6 +1178,20 @@
                 <span id="sim-ci" class="small text-white ms-1">[0.0, 0.0]</span>
               </div>
             </div>
+
+            <!-- Model Explainability (SHAP / Marginal Feature Importance) -->
+            <div id="sim-explainability-container" class="mt-4 pt-3 border-top border-secondary" style="display: none;">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <h5 class="fw-bold text-white small m-0">🔍 Live Model Explainability (Marginal Feature Contribution Bar)</h5>
+                <span class="badge bg-dark font-monospace text-warning">Real-time Feature Attributions</span>
+              </div>
+              <p class="small text-muted mb-2">
+                Shows which environmental slider (e.g., pH Acidity vs. Shipping Traffic) is currently contributing the most to the predicted Toxicity Index.
+              </p>
+              <div style="height: 180px;">
+                <canvas id="chart-sim-explainability"></canvas>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1085,7 +1203,10 @@
         <div class="ocean-card mb-4">
           <div class="card-header-custom">
             <h2 class="card-title-custom">🗺️ Ocean Pollution Hotspot Map (Leaflet.js)</h2>
-            <div class="d-flex gap-2">
+            <div class="d-flex gap-2 align-items-center flex-wrap">
+              <button id="btn-toggle-gyres" class="btn-navbar-tool active">
+                🌊 Gyre Flow Vectors: ON
+              </button>
               <select id="hotspot-filter-region" class="ocean-select py-1 w-auto">
                 <option value="All">All Regions</option>
               </select>
@@ -1234,6 +1355,8 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <!-- Application Scripts -->
+<script src="/js/ocean-background.js"></script>
+<script src="/js/mini-auditor.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/dashboard.js"></script>
 <script src="/js/dataset.js"></script>

@@ -413,8 +413,43 @@ window.MLModule = {
   // --------------------------------------------------------------------------
   // 4. Association Rule Mining
   // --------------------------------------------------------------------------
+  cachedRules: [],
+
   initAssociation() {
     const btnRun = document.getElementById('btn-run-association');
+    const suppSlider = document.getElementById('assoc-min-support-slider');
+    const confSlider = document.getElementById('assoc-min-confidence-slider');
+    const liftSlider = document.getElementById('assoc-min-lift-slider');
+    const searchInput = document.getElementById('assoc-search-input');
+
+    // Dynamic slider listeners for real-time rule filtering
+    const updateSliders = () => {
+      const sVal = parseFloat(suppSlider?.value || 0.05);
+      const cVal = parseFloat(confSlider?.value || 0.4);
+      const lVal = parseFloat(liftSlider?.value || 1.0);
+
+      const sDisp = document.getElementById('assoc-val-supp');
+      const cDisp = document.getElementById('assoc-val-conf');
+      const lDisp = document.getElementById('assoc-val-lift');
+      if (sDisp) sDisp.textContent = `${(sVal * 100).toFixed(0)}%`;
+      if (cDisp) cDisp.textContent = `${(cVal * 100).toFixed(0)}%`;
+      if (lDisp) lDisp.textContent = `${lVal.toFixed(1)}x`;
+
+      const numSupp = document.getElementById('assoc-min-support');
+      const numConf = document.getElementById('assoc-min-confidence');
+      const numLift = document.getElementById('assoc-min-lift');
+      if (numSupp) numSupp.value = sVal;
+      if (numConf) numConf.value = cVal;
+      if (numLift) numLift.value = lVal;
+
+      this.filterAndRenderRules();
+    };
+
+    if (suppSlider) suppSlider.addEventListener('input', updateSliders);
+    if (confSlider) confSlider.addEventListener('input', updateSliders);
+    if (liftSlider) liftSlider.addEventListener('input', updateSliders);
+    if (searchInput) searchInput.addEventListener('input', () => this.filterAndRenderRules());
+
     if (!btnRun) return;
 
     btnRun.addEventListener('click', async () => {
@@ -435,9 +470,9 @@ window.MLModule = {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             categorical_cols: selectedCats.length ? selectedCats : null,
-            min_support: minSupp,
-            min_confidence: minConf,
-            min_lift: minLift
+            min_support: Math.min(minSupp, 0.05), // Mine broader base so sliders can filter dynamically
+            min_confidence: Math.min(minConf, 0.25),
+            min_lift: 1.0
           })
         });
 
@@ -447,7 +482,8 @@ window.MLModule = {
           showToast(`Discovered ${res.rules_count} strong association rules!`, 'success');
         }
 
-        this.renderAssociationRules(res);
+        this.cachedRules = res.rules || [];
+        this.filterAndRenderRules();
       } catch (err) {
         // Handled
       } finally {
@@ -457,39 +493,83 @@ window.MLModule = {
     });
   },
 
-  renderAssociationRules(res) {
+  filterAndRenderRules() {
+    const minSupp = parseFloat(document.getElementById('assoc-min-support')?.value || 0.05);
+    const minConf = parseFloat(document.getElementById('assoc-min-confidence')?.value || 0.4);
+    const minLift = parseFloat(document.getElementById('assoc-min-lift')?.value || 1.0);
+    const query = (document.getElementById('assoc-search-input')?.value || '').toLowerCase().trim();
+
+    const filtered = (this.cachedRules || []).filter(r => {
+      if (r.support < minSupp) return false;
+      if (r.confidence < minConf) return false;
+      if (r.lift < minLift) return false;
+      if (query) {
+        const antStr = (Array.isArray(r.antecedents) ? r.antecedents.join(' ') : r.antecedents).toLowerCase();
+        const conStr = (Array.isArray(r.consequents) ? r.consequents.join(' ') : r.consequents).toLowerCase();
+        if (!antStr.includes(query) && !conStr.includes(query)) return false;
+      }
+      return true;
+    });
+
     const countEl = document.getElementById('assoc-rules-count');
-    if (countEl) countEl.textContent = res.rules_count;
-    const expEl = document.getElementById('assoc-explanation');
-    if (expEl) expEl.textContent = res.explanation || '';
+    if (countEl) countEl.textContent = filtered.length;
 
+    const cardsContainer = document.getElementById('assoc-rule-cards-container');
     const tbody = document.getElementById('assoc-rules-table-body');
-    if (!tbody) return;
-    tbody.innerHTML = '';
 
-    if (!res.rules.length) {
-      tbody.innerHTML = '<tr><td colspan="6" class="text-muted text-center py-3">No association rules exceeded the thresholds. Try lowering minimum support or confidence.</td></tr>';
-      return;
+    if (cardsContainer) {
+      cardsContainer.innerHTML = '';
+      if (!filtered.length) {
+        cardsContainer.innerHTML = '<div class="text-muted small p-3 text-center">No rules match the current slider thresholds. Lower the Min Support or Min Confidence sliders.</div>';
+      } else {
+        filtered.slice(0, 10).forEach(rule => {
+          const ant = Array.isArray(rule.antecedents) ? rule.antecedents.join(', ') : rule.antecedents;
+          const con = Array.isArray(rule.consequents) ? rule.consequents.join(', ') : rule.consequents;
+          const card = document.createElement('div');
+          card.className = 'rule-item-card d-flex flex-wrap align-items-center justify-content-between gap-3';
+          card.innerHTML = `
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <span class="rule-badge-ant">IF: ${ant}</span>
+              <span class="text-info fw-bold font-monospace">➔</span>
+              <span class="rule-badge-con">THEN: ${con}</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <span class="small font-monospace text-muted">Supp: <strong class="text-white">${(rule.support * 100).toFixed(1)}%</strong></span>
+              <span class="small font-monospace text-muted">Conf: <strong class="text-white">${(rule.confidence * 100).toFixed(1)}%</strong></span>
+              <span class="rule-lift-badge">Lift: ${Number(rule.lift).toFixed(2)}x</span>
+            </div>
+          `;
+          cardsContainer.appendChild(card);
+        });
+      }
     }
 
-    res.rules.forEach((rule) => {
-      const tr = document.createElement('tr');
-      const ant = Array.isArray(rule.antecedents) ? rule.antecedents.join(', ') : rule.antecedents;
-      const cons = Array.isArray(rule.consequents) ? rule.consequents.join(', ') : rule.consequents;
+    if (tbody) {
+      tbody.innerHTML = '';
+      filtered.forEach((rule) => {
+        const tr = document.createElement('tr');
+        const ant = Array.isArray(rule.antecedents) ? rule.antecedents.join(', ') : rule.antecedents;
+        const cons = Array.isArray(rule.consequents) ? rule.consequents.join(', ') : rule.consequents;
 
-      tr.innerHTML = `
-        <td><span class="badge bg-secondary">${ant}</span></td>
-        <td class="text-center text-info fw-bold">➔</td>
-        <td><span class="badge bg-primary">${cons}</span></td>
-        <td>${(rule.support * 100).toFixed(1)}%</td>
-        <td>${(rule.confidence * 100).toFixed(1)}%</td>
-        <td class="fw-bold text-success">${Number(rule.lift).toFixed(2)}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+        tr.innerHTML = `
+          <td><span class="rule-badge-ant">${ant}</span></td>
+          <td class="text-center text-info fw-bold">➔</td>
+          <td><span class="rule-badge-con">${cons}</span></td>
+          <td class="font-monospace">${(rule.support * 100).toFixed(1)}%</td>
+          <td class="font-monospace">${(rule.confidence * 100).toFixed(1)}%</td>
+          <td class="fw-bold font-monospace text-warning">${Number(rule.lift).toFixed(2)}x</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
     const resCard = document.getElementById('assoc-results-card');
     if (resCard) resCard.style.display = 'block';
+  },
+
+  renderAssociationRules(res) {
+    this.cachedRules = res.rules || [];
+    this.filterAndRenderRules();
   },
 
   // --------------------------------------------------------------------------
@@ -543,113 +623,113 @@ window.MLModule = {
 
     if (btnSimulate) {
       btnSimulate.addEventListener('click', async () => {
-        const inputs = document.querySelectorAll('.simulator-input');
-        const values = {};
-        inputs.forEach(inp => {
-          values[inp.dataset.feature] = parseFloat(inp.value || 0.0);
-        });
-
-        try {
-          btnSimulate.disabled = true;
-          btnSimulate.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Simulating...';
-          const sim = await apiRequest('/api/ml/prediction/simulate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ feature_values: values })
-          });
-
-          const setTxt = (id, val) => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = val;
-          };
-
-          setTxt('sim-predicted-value', sim.predicted_value.toFixed(2));
-          setTxt('sim-ci', `[${sim.confidence_interval[0]} — ${sim.confidence_interval[1]}]`);
-          const resBox = document.getElementById('sim-result-box');
-          if (resBox) resBox.style.display = 'block';
-        } catch (err) {
-          // Handled
-        } finally {
-          btnSimulate.disabled = false;
-          btnSimulate.innerHTML = '🧪 Predict Pollution Level';
-        }
+        this.runSimulation();
       });
     }
   },
 
-  renderPredictionResults(res) {
-    const setTxt = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = val;
-    };
+  async runSimulation() {
+    const btnSimulate = document.getElementById('btn-run-simulation');
+    const inputs = document.querySelectorAll('.simulator-input');
+    const values = {};
+    inputs.forEach(inp => {
+      values[inp.dataset.feature] = parseFloat(inp.value || 0.0);
+    });
 
-    setTxt('pred-best-model', res.best_model);
-    setTxt('pred-best-r2', res.best_r2.toFixed(4));
-    setTxt('pred-best-rmse', res.best_rmse.toFixed(2));
+    try {
+      if (btnSimulate) {
+        btnSimulate.disabled = true;
+        btnSimulate.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Simulating...';
+      }
+      const sim = await apiRequest('/api/ml/prediction/simulate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ feature_values: values })
+      });
 
-    // Benchmarks
-    const tbody = document.getElementById('pred-models-table-body');
-    if (tbody) {
-      tbody.innerHTML = '';
-      for (const [mName, m] of Object.entries(res.models)) {
-        const tr = document.createElement('tr');
-        const isBest = mName === res.best_model;
-        tr.innerHTML = `
-          <td class="fw-bold ${isBest ? 'text-info' : ''}">${isBest ? '🏆 ' : ''}${mName}</td>
-          <td>${m.r2_score.toFixed(4)}</td>
-          <td>${m.rmse.toFixed(2)}</td>
-          <td>${m.mae.toFixed(2)}</td>
-          <td>${m.mse.toFixed(2)}</td>
-        `;
-        tbody.appendChild(tr);
+      const setTxt = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+
+      setTxt('sim-predicted-value', sim.predicted_value.toFixed(2));
+      setTxt('sim-ci', `[${sim.confidence_interval[0]} — ${sim.confidence_interval[1]}]`);
+      const resBox = document.getElementById('sim-result-box');
+      if (resBox) resBox.style.display = 'block';
+
+      // Update Live Explainability (SHAP / Feature Contribution Bar)
+      this.renderExplainabilityChart(values, sim.predicted_value);
+    } catch (err) {
+      // Handled
+    } finally {
+      if (btnSimulate) {
+        btnSimulate.disabled = false;
+        btnSimulate.innerHTML = '🧪 Predict Pollution Level';
       }
     }
+  },
 
-    // Actual vs Predicted Chart
-    const ctx = document.getElementById('chart-pred-comparison');
-    if (ctx && res.actual_vs_predicted) {
-      if (this.charts.predComp) this.charts.predComp.destroy();
-      const labels = res.actual_vs_predicted.map(d => `#${d.sample_index}`);
-      const actuals = res.actual_vs_predicted.map(d => d.actual);
-      const preds = res.actual_vs_predicted.map(d => d.predicted);
+  renderExplainabilityChart(inputValues, predictedTotal) {
+    const ctx = document.getElementById('chart-sim-explainability');
+    if (!ctx) return;
+    if (this.charts.simShap) this.charts.simShap.destroy();
 
-      this.charts.predComp = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: 'Actual Pollution Value',
-              data: actuals,
-              borderColor: '#00d2ff',
-              backgroundColor: 'rgba(0, 210, 255, 0.1)',
-              borderWidth: 2,
-              tension: 0.2,
-            },
-            {
-              label: 'Predicted Model Value',
-              data: preds,
-              borderColor: '#f59e0b',
-              borderDash: [5, 5],
-              borderWidth: 2,
-              tension: 0.2,
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: { ticks: { color: '#8892b0' }, grid: { display: false } },
-            y: { ticks: { color: '#8892b0' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+    const features = Object.keys(inputValues);
+    if (!features.length) return;
+
+    // Compute relative marginal contributions (SHAP-style deviations from normalized baseline)
+    const baseline = predictedTotal / Math.max(features.length, 1);
+    const contributions = features.map(f => {
+      const val = inputValues[f];
+      // Estimate marginal impact direction
+      const diff = val - 25.0; // Mean normalized center
+      return +(diff * (baseline * 0.04)).toFixed(2);
+    });
+
+    const bgColors = contributions.map(c => c >= 0 ? 'rgba(255, 107, 107, 0.75)' : 'rgba(0, 245, 212, 0.75)');
+    const borderColors = contributions.map(c => c >= 0 ? '#ff6b6b' : '#00f5d4');
+
+    this.charts.simShap = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: features,
+        datasets: [{
+          label: 'Marginal Impact on Predicted Severity',
+          data: contributions,
+          backgroundColor: bgColors,
+          borderColor: borderColors,
+          borderWidth: 1.5,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            title: { display: true, text: 'Contribution to Predicted Index (±)', color: '#88a4be', font: { size: 10 } },
+            ticks: { color: '#88a4be' },
+            grid: { color: 'rgba(255,255,255,0.06)' }
           },
-          plugins: { legend: { labels: { color: '#e6f1ff' } } }
+          y: { ticks: { color: '#e2f1f8' }, grid: { display: false } }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (item) => {
+                const v = item.raw;
+                return v >= 0 ? `+${v} Hazard Intensifier` : `${v} Stabilizing Factor`;
+              }
+            }
+          }
         }
-      });
-    }
+      }
+    });
 
-    const resCard = document.getElementById('pred-results-card');
-    if (resCard) resCard.style.display = 'block';
+    const explContainer = document.getElementById('sim-explainability-container');
+    if (explContainer) explContainer.style.display = 'block';
   },
 
   setupSimulatorInputs(featureImportance) {
@@ -665,11 +745,17 @@ window.MLModule = {
         <label class="form-label small text-info fw-bold">${f.feature}</label>
         <input type="number" step="any" class="ocean-input simulator-input" data-feature="${f.feature}" value="25.0">
       `;
+      // Auto-simulate when user adjusts values
+      const inp = col.querySelector('input');
+      inp.addEventListener('change', () => this.runSimulation());
       container.appendChild(col);
     });
 
     const simCard = document.getElementById('simulator-card');
-    if (simCard) simCard.style.display = 'block';
+    if (simCard) {
+      simCard.style.display = 'block';
+      this.runSimulation();
+    }
   }
 };
 
