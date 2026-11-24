@@ -63,6 +63,7 @@ window.DashboardModule = {
       if (trendsData.regions && trendsData.regions.length) {
         this.renderRegionChart(trendsData.regions);
       }
+      this.renderDepthProfileChart();
 
     } catch (err) {
       console.error('Error refreshing dashboard:', err);
@@ -211,5 +212,11 @@ window.DashboardModule = {
         }
       }
     });
+  },
+
+  renderDepthProfileChart() {
+    if (window.MapsModule && typeof window.MapsModule.renderDepthProfileChart === 'function') {
+      window.MapsModule.renderDepthProfileChart();
+    }
   }
 };
