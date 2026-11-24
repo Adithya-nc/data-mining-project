@@ -256,11 +256,11 @@ window.MiniAuditor = {
         // Dynamic Heatmap Color (Blue-Negative -> Neutral-Dark -> Teal/Cyan-Positive)
         let bgStyle = '';
         if (r > 0) {
-          const alpha = (r * 0.75).toFixed(2);
-          bgStyle = `background: rgba(0, 245, 212, ${alpha}); color: ${r > 0.4 ? '#020b16' : '#e2f1f8'}; font-weight: ${r > 0.4 ? '700' : '500'};`;
+          const alpha = Math.min(0.85, Math.max(0.18, r * 0.65)).toFixed(2);
+          bgStyle = `background: rgba(0, 245, 212, ${alpha}); color: #ffffff; font-weight: 700; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);`;
         } else {
-          const alpha = (Math.abs(r) * 0.75).toFixed(2);
-          bgStyle = `background: rgba(255, 107, 107, ${alpha}); color: ${Math.abs(r) > 0.4 ? '#020b16' : '#e2f1f8'}; font-weight: ${Math.abs(r) > 0.4 ? '700' : '500'};`;
+          const alpha = Math.min(0.85, Math.max(0.18, Math.abs(r) * 0.65)).toFixed(2);
+          bgStyle = `background: rgba(255, 107, 107, ${alpha}); color: #ffffff; font-weight: 700; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);`;
         }
 
         rowHtml += `<td style="${bgStyle}" class="cursor-pointer" onclick="MiniAuditor.showCorrelationDetails('${rowCol}', '${colCol}', ${r})">${r.toFixed(2)}</td>`;

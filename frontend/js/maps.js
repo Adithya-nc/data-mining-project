@@ -329,12 +329,12 @@ window.MapsModule = {
       });
 
       marker.bindPopup(`
-        <div style="color: #071322; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; min-width: 170px; padding: 4px;">
-          <h6 style="margin: 0 0 6px 0; font-weight: 700; color: #0077b6;">📍 Pollution Observation</h6>
-          <div style="margin-bottom: 2px;"><strong>Coordinates:</strong> ${p.lat.toFixed(3)}, ${p.lng.toFixed(3)}</div>
-          <div style="margin-bottom: 2px;"><strong>Region:</strong> ${p.region || 'Ocean Basin'}</div>
-          <div style="margin-bottom: 4px;"><strong>Category:</strong> <span style="background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: 600;">${p.category || 'General'}</span></div>
-          <div><strong>Measurement:</strong> <span style="font-weight: 800; color: #f43f5e; font-size: 13px;">${p.val}</span></div>
+        <div style="color: #e2f1f8; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; min-width: 175px; padding: 4px;">
+          <h6 style="margin: 0 0 6px 0; font-weight: 700; color: #00f5d4;">📍 Pollution Observation</h6>
+          <div style="margin-bottom: 3px; color: #bfe0f5;"><strong>Coordinates:</strong> <span style="color: #ffffff;">${p.lat.toFixed(3)}, ${p.lng.toFixed(3)}</span></div>
+          <div style="margin-bottom: 3px; color: #bfe0f5;"><strong>Region:</strong> <span style="color: #00bbf9;">${p.region || 'Ocean Basin'}</span></div>
+          <div style="margin-bottom: 4px; color: #bfe0f5;"><strong>Category:</strong> <span style="background: rgba(0, 187, 249, 0.2); color: #00bbf9; padding: 2px 6px; border-radius: 4px; font-weight: 600; border: 1px solid rgba(0, 187, 249, 0.4);">${p.category || 'General'}</span></div>
+          <div style="color: #bfe0f5;"><strong>Measurement:</strong> <span style="font-weight: 800; color: #ff6b6b; font-size: 13px;">${p.val}</span></div>
         </div>
       `);
 

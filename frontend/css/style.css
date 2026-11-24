@@ -13,8 +13,8 @@
   --border-focus: #00f5d4;
   
   --text-main: #e2f1f8;
-  --text-muted: #88a4be;
-  --text-dim: #55728f;
+  --text-muted: #a0c2dc;
+  --text-dim: #7da8c8;
   
   --accent-cyan: #00bbf9;
   --accent-teal: #00f5d4;
@@ -22,6 +22,24 @@
   --accent-amber: #fee440;
   --accent-rose: #ff6b6b;
   --accent-purple: #8338ec;
+
+  /* Bootstrap 5 Theme Overrides for High-Contrast Dark Ocean Mode */
+  --bs-body-color: #e2f1f8;
+  --bs-body-color-rgb: 226, 241, 248;
+  --bs-body-bg: #020b16;
+  --bs-secondary-color: #a0c2dc;
+  --bs-tertiary-color: #7da8c8;
+  --bs-emphasis-color: #ffffff;
+  --bs-heading-color: #ffffff;
+  --bs-link-color: #00f5d4;
+  --bs-link-hover-color: #00bbf9;
+  --bs-border-color: rgba(56, 224, 242, 0.18);
+  --bs-table-color: #e2f1f8;
+  --bs-table-bg: transparent;
+  --bs-table-border-color: rgba(56, 224, 242, 0.15);
+  --bs-table-striped-color: #e2f1f8;
+  --bs-table-hover-color: #ffffff;
+  --bs-table-hover-bg: rgba(0, 245, 212, 0.08);
   
   --sidebar-width: 260px;
   --navbar-height: 70px;
@@ -49,6 +67,111 @@ body {
   overflow-x: hidden;
   line-height: 1.5;
   position: relative;
+}
+
+/* ==========================================================================
+   Global High-Contrast Text Overrides (Fix for black/dim text)
+   ========================================================================== */
+
+/* Universal text readability */
+body, p, span, div, li, td, th, label, dt, dd {
+  color: #e2f1f8;
+}
+
+/* Headings in crisp bright white */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  color: #ffffff !important;
+}
+
+/* Replace dark grey/black text-muted with clear luminous soft cyan */
+.text-muted, [class*="text-muted"], .card-subtitle-custom {
+  color: #a0c2dc !important;
+}
+
+.text-dim, .text-secondary {
+  color: #81abc9 !important;
+}
+
+/* Eliminate any accidental Bootstrap black text */
+.text-dark {
+  color: #e2f1f8 !important;
+}
+
+/* Form labels and helper text */
+.form-label, label, .form-check-label {
+  color: #bfe0f5 !important;
+  font-weight: 500;
+}
+
+/* Tables and cells */
+.table, .table-ocean, table {
+  color: #e2f1f8 !important;
+  --bs-table-color: #e2f1f8 !important;
+  --bs-table-striped-color: #e2f1f8 !important;
+  --bs-table-hover-color: #ffffff !important;
+  --bs-table-bg: transparent !important;
+  --bs-table-border-color: rgba(56, 224, 242, 0.15) !important;
+}
+
+.table > :not(caption) > * > *,
+.table-ocean > :not(caption) > * > * {
+  color: #e2f1f8 !important;
+  background-color: transparent !important;
+  border-color: rgba(56, 224, 242, 0.15) !important;
+}
+
+.table th, .table-ocean th, th {
+  color: #00f5d4 !important;
+  font-weight: 600 !important;
+}
+
+.table td, .table-ocean td, td {
+  color: #d8ecf8 !important;
+}
+
+.table tr:hover > *, .table-ocean tr:hover > * {
+  color: #ffffff !important;
+  background-color: rgba(0, 245, 212, 0.08) !important;
+}
+
+/* Bootstrap dark panels and cards */
+.bg-dark, .bg-secondary {
+  background-color: rgba(4, 20, 38, 0.88) !important;
+  color: #e2f1f8 !important;
+  border-color: rgba(56, 224, 242, 0.2) !important;
+}
+
+.bg-dark * {
+  color: inherit;
+}
+
+.bg-dark .text-muted {
+  color: #a0c2dc !important;
+}
+
+/* Paragraphs and list items */
+p, li {
+  color: #d4e8f7;
+}
+
+small, .small {
+  color: #a0c2dc;
+}
+
+/* Inputs, Selects, and Dropdowns */
+.ocean-select, .ocean-input, input, select, textarea, .form-control, .form-select {
+  color: #e2f1f8 !important;
+  background-color: rgba(4, 20, 38, 0.85) !important;
+  border: 1px solid rgba(56, 224, 242, 0.25) !important;
+}
+
+.ocean-select option, select option {
+  background-color: #041426 !important;
+  color: #e2f1f8 !important;
+}
+
+input::placeholder, textarea::placeholder, .form-control::placeholder {
+  color: #6a92b2 !important;
 }
 
 /* Animated Deep Ocean Caustics & Bioluminescence WebGL Canvas */
