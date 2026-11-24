@@ -2,6 +2,15 @@
  * MarineMine Pro — Main Application Orchestrator & State Management
  */
 
+// Configure Chart.js global defaults for Dark Ocean high-contrast visibility
+if (typeof Chart !== 'undefined') {
+  Chart.defaults.color = '#a0c2dc';
+  Chart.defaults.borderColor = 'rgba(56, 224, 242, 0.12)';
+  if (Chart.defaults.plugins && Chart.defaults.plugins.legend) {
+    Chart.defaults.plugins.legend.labels.color = '#e2f1f8';
+  }
+}
+
 // Determine API base dynamically: fallback to :8000 if frontend is served on another port
 const API_BASE = (window.location.port && window.location.port !== '8000')
   ? `${window.location.protocol}//${window.location.hostname}:8000`
