@@ -198,14 +198,23 @@ class MLService:
             }
 
         try:
-            basket_df = association_rules.create_transaction_basket(df, categorical_cols=target_cols)
+            basket_df = association_rules.prepare_transactions(df, cols=target_cols)
             frequent_itemsets = association_rules.mine_frequent_itemsets(basket_df, min_support=min_support)
-            rules_df = association_rules.generate_association_rules(
+            rules_df = association_rules.generate_rules(
                 frequent_itemsets,
                 min_confidence=min_confidence,
                 min_lift=min_lift,
             )
-            rule_records = association_rules.rules_to_display_records(rules_df)
+            rule_records = [
+                {
+                    "antecedents": sorted(str(item) for item in row["antecedents"]),
+                    "consequents": sorted(str(item) for item in row["consequents"]),
+                    "support": float(row["support"]),
+                    "confidence": float(row["confidence"]),
+                    "lift": float(row["lift"]),
+                }
+                for _, row in rules_df.iterrows()
+            ]
             return {
                 "rules_count": len(rule_records),
                 "rules": rule_records[:50],

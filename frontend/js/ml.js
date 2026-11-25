@@ -143,17 +143,28 @@ window.MLModule = {
         try {
           btnRun.disabled = true;
           btnRun.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Clustering...';
-          const res = await apiRequest('/api/ml/clustering', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ features: selectedFeats, k })
-          });
+          const [res, opt] = await Promise.all([
+            apiRequest('/api/ml/clustering', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ features: selectedFeats, k })
+            }),
+            apiRequest('/api/ml/clustering/optimal-k', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ features: selectedFeats, k })
+            }).catch(() => null)
+          ]);
 
           showToast(`K-Means completed! Silhouette Score: ${res.silhouette_score}`, 'success');
           const sil = document.getElementById('clustering-silhouette');
           if (sil) sil.textContent = res.silhouette_score;
           const inr = document.getElementById('clustering-inertia');
           if (inr) inr.textContent = res.inertia.toLocaleString();
+
+          if (opt && opt.k_range && opt.inertias && opt.silhouette_scores) {
+            this.renderElbowChart(opt.k_range, opt.inertias, opt.silhouette_scores);
+          }
 
           this.renderClusterScatter(res.pca_data);
           this.renderClusterProfiles(res.cluster_profiles);
@@ -483,6 +494,8 @@ window.MLModule = {
         }
 
         this.cachedRules = res.rules || [];
+        const expEl = document.getElementById('assoc-explanation');
+        if (expEl) expEl.textContent = res.explanation || '';
         this.filterAndRenderRules();
       } catch (err) {
         // Handled
@@ -616,7 +629,7 @@ window.MLModule = {
           // Handled
         } finally {
           btnTrain.disabled = false;
-          btnTrain.innerHTML = '📈 Benchmark Regression Models';
+          btnTrain.innerHTML = '📈 Benchmark Regression';
         }
       });
     }
@@ -626,6 +639,88 @@ window.MLModule = {
         this.runSimulation();
       });
     }
+  },
+
+  renderPredictionResults(res) {
+    const setTxt = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    };
+
+    setTxt('pred-best-model', res.best_model || 'N/A');
+    setTxt('pred-best-r2', Number(res.best_r2 ?? 0).toFixed(4));
+    setTxt('pred-best-rmse', Number(res.best_rmse ?? 0).toFixed(4));
+
+    // Benchmark Table
+    const tbody = document.getElementById('pred-models-table-body');
+    if (tbody) {
+      tbody.innerHTML = '';
+      for (const [mName, m] of Object.entries(res.models || {})) {
+        const tr = document.createElement('tr');
+        const isBest = mName === res.best_model;
+        tr.innerHTML = `
+          <td class="fw-bold ${isBest ? 'text-info' : ''}">${isBest ? '🏆 ' : ''}${mName}</td>
+          <td class="fw-bold ${Number(m.r2_score) >= 0.7 ? 'text-success' : 'text-warning'}">${Number(m.r2_score ?? 0).toFixed(4)}</td>
+          <td>${Number(m.rmse ?? 0).toFixed(4)}</td>
+          <td>${Number(m.mae ?? 0).toFixed(4)}</td>
+          <td>${Number(m.mse ?? 0).toFixed(4)}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    // Actual vs. Predicted Line Chart
+    const ctx = document.getElementById('chart-pred-comparison');
+    if (ctx && Array.isArray(res.actual_vs_predicted) && res.actual_vs_predicted.length) {
+      if (this.charts.predComparison) this.charts.predComparison.destroy();
+
+      const labels = res.actual_vs_predicted.map(d => `#${d.sample_index}`);
+      const actualVals = res.actual_vs_predicted.map(d => d.actual);
+      const predVals = res.actual_vs_predicted.map(d => d.predicted);
+
+      this.charts.predComparison = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Actual',
+              data: actualVals,
+              borderColor: '#00f5d4',
+              backgroundColor: 'rgba(0, 245, 212, 0.12)',
+              borderWidth: 2,
+              pointRadius: 3,
+              tension: 0.25,
+            },
+            {
+              label: 'Predicted',
+              data: predVals,
+              borderColor: '#ff6b6b',
+              backgroundColor: 'rgba(255, 107, 107, 0.12)',
+              borderWidth: 2,
+              borderDash: [5, 4],
+              pointRadius: 3,
+              tension: 0.25,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            x: { ticks: { color: '#8892b0', maxTicksLimit: 10 }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { ticks: { color: '#8892b0' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+          },
+          plugins: {
+            legend: { labels: { color: '#e2f1f8' } }
+          }
+        }
+      });
+    }
+
+    const resCard = document.getElementById('pred-results-card');
+    if (resCard) resCard.style.display = 'block';
   },
 
   async runSimulation() {

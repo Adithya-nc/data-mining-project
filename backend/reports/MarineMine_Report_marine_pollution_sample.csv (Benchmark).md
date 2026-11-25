@@ -1,5 +1,5 @@
 # 🌊 MarineMine Pro: Comprehensive Marine Pollution Analysis Report
-**Generated On:** 2026-11-22 18:46:12  
+**Generated On:** 2026-11-25 09:19:38  
 **System:** MarineMine Pro (Data Mining & Machine Learning Suite)  
 
 ---
@@ -14,9 +14,9 @@
 - **Dataset Name:** `marine_pollution_sample.csv (Benchmark)`
 - **Total Records:** 1022
 - **Total Features (Columns):** 19
-- **Memory Footprint:** 0.8 MB
+- **Memory Footprint:** 0.27 MB
 - **Identified Date Range:** {'min': None, 'max': None, 'columns_used': []}
-- **Missing Value Frequency:** {'record_id': 0.0, 'observation_date': 0.0, 'latitude': 0.0, 'longitude': 0.0, 'region': 0.0, 'country': 0.0, 'pollution_type': 0.0, 'pollution_value': 0.0, 'pollution_unit': 0.0, 'temperature_celsius': 0.0, 'salinity_ppt': 0.0, 'ph_level': 0.0, 'dissolved_oxygen': 0.0, 'weather_condition': 0.0, 'ocean_condition': 0.0, 'water_depth_m': 0.0, 'monitoring_station': 0.0, 'data_source': 0.0, 'notes': 0.0}%
+- **Missing Value Frequency:** {'record_id': 0.0, 'observation_date': 0.0, 'latitude': 0.0, 'longitude': 0.0, 'region': 0.0, 'country': 0.0, 'pollution_type': 0.0, 'pollution_value': 0.0, 'pollution_unit': 0.0, 'temperature_celsius': 9.98, 'salinity_ppt': 9.2, 'ph_level': 7.05, 'dissolved_oxygen': 6.65, 'weather_condition': 8.41, 'ocean_condition': 0.0, 'water_depth_m': 8.12, 'monitoring_station': 0.0, 'data_source': 0.0, 'notes': 0.0}%
 
 ## 2. Data Preprocessing & Cleaning History
 - **Original Rows:** N/A

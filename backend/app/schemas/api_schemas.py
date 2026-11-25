@@ -126,6 +126,9 @@ class EDATrendsResponse(BaseModel):
     date_col: Optional[str] = None
     value_col: Optional[str] = None
     trends: List[Dict[str, Any]]
+    categories: List[Dict[str, Any]] = []
+    regions: List[Dict[str, Any]] = []
+    depth_profile: List[Dict[str, Any]] = []
     seasonal: Optional[Dict[str, Any]] = None
 
 

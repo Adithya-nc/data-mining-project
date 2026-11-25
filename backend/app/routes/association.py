@@ -23,7 +23,7 @@ def run_association_mining(req: AssociationRequest):
             min_confidence=req.min_confidence,
             min_lift=req.min_lift,
         )
-        state.association_rules_summary = result
+        state.association_rules_results = result
         return result
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))

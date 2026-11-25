@@ -128,12 +128,39 @@ class DataAnalyzerService:
             counts["percentage"] = (counts["count"] / len(df) * 100).round(1)
             regions = counts.to_dict(orient="records")
 
+        # Bathymetric Depth Profile
+        depth_profile = []
+        depth_col = cols_lower.get("water_depth_m", cols_lower.get("depth_m", cols_lower.get("depth")))
+        temp_col = cols_lower.get("temperature_celsius", cols_lower.get("temperature", cols_lower.get("temp")))
+        do_col = cols_lower.get("dissolved_oxygen", cols_lower.get("do"))
+        if depth_col and depth_col in df.columns and np.issubdtype(df[depth_col].dtype, np.number):
+            try:
+                sub = df.dropna(subset=[depth_col]).copy()
+                if not sub.empty:
+                    bins = [-float("inf"), 200, 1000, 2000, 3000, float("inf")]
+                    labels = ["0-200m (Epipelagic)", "200-1,000m (Mesopelagic)", "1,000-2,000m (Bathypelagic)", "2,000-3,000m (Upper Abyssal)", "3,000m+ (Abyssal Floor)"]
+                    sub["depth_zone"] = pd.cut(sub[depth_col], bins=bins, labels=labels)
+                    for zone in labels:
+                        z_df = sub[sub["depth_zone"] == zone]
+                        if not z_df.empty:
+                            entry: Dict[str, Any] = {"zone": zone, "count": int(len(z_df))}
+                            if temp_col and temp_col in z_df.columns and np.issubdtype(z_df[temp_col].dtype, np.number):
+                                entry["temperature"] = round(float(z_df[temp_col].mean()), 2)
+                            if do_col and do_col in z_df.columns and np.issubdtype(z_df[do_col].dtype, np.number):
+                                entry["dissolved_oxygen"] = round(float(z_df[do_col].mean()), 2)
+                            if val_col and val_col in z_df.columns and np.issubdtype(z_df[val_col].dtype, np.number):
+                                entry["pollution_value"] = round(float(z_df[val_col].mean()), 2)
+                            depth_profile.append(entry)
+            except Exception:
+                depth_profile = []
+
         return {
             "date_col": date_col,
             "value_col": val_col,
             "trends": trends,
             "categories": categories,
             "regions": regions,
+            "depth_profile": depth_profile,
         }
 
     @staticmethod

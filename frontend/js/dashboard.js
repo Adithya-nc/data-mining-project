@@ -63,7 +63,9 @@ window.DashboardModule = {
       if (trendsData.regions && trendsData.regions.length) {
         this.renderRegionChart(trendsData.regions);
       }
-      this.renderDepthProfileChart();
+      if (trendsData.depth_profile && trendsData.depth_profile.length) {
+        this.renderDepthProfileChart(trendsData.depth_profile);
+      }
 
     } catch (err) {
       console.error('Error refreshing dashboard:', err);
@@ -214,9 +216,67 @@ window.DashboardModule = {
     });
   },
 
-  renderDepthProfileChart() {
-    if (window.MapsModule && typeof window.MapsModule.renderDepthProfileChart === 'function') {
-      window.MapsModule.renderDepthProfileChart();
+  renderDepthProfileChart(depthProfile) {
+    const ctx = document.getElementById('chart-depth-profile');
+    if (!ctx || !depthProfile || !depthProfile.length) return;
+
+    if (this.charts.depthProfile) this.charts.depthProfile.destroy();
+
+    const labels = depthProfile.map(d => d.zone);
+    const datasets = [];
+
+    if (depthProfile.some(d => d.pollution_value !== undefined)) {
+      datasets.push({
+        label: 'Mean Pollution Value',
+        data: depthProfile.map(d => d.pollution_value ?? null),
+        borderColor: '#f43f5e',
+        backgroundColor: 'rgba(244, 63, 94, 0.15)',
+        yAxisID: 'y',
+        tension: 0.35,
+        fill: true,
+        borderWidth: 2.5,
+      });
     }
+
+    if (depthProfile.some(d => d.temperature !== undefined)) {
+      datasets.push({
+        label: 'Temperature (°C)',
+        data: depthProfile.map(d => d.temperature ?? null),
+        borderColor: '#f59e0b',
+        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+        yAxisID: 'y1',
+        tension: 0.35,
+        borderWidth: 2,
+      });
+    }
+
+    if (depthProfile.some(d => d.dissolved_oxygen !== undefined)) {
+      datasets.push({
+        label: 'Dissolved O₂ (mg/L)',
+        data: depthProfile.map(d => d.dissolved_oxygen ?? null),
+        borderColor: '#00d2ff',
+        backgroundColor: 'rgba(0, 210, 255, 0.1)',
+        yAxisID: 'y1',
+        tension: 0.35,
+        borderWidth: 2,
+      });
+    }
+
+    this.charts.depthProfile = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { ticks: { color: '#8892b0' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+          y: { type: 'linear', position: 'left', title: { display: true, text: 'Pollution Level', color: '#f43f5e' }, ticks: { color: '#f43f5e' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+          y1: { type: 'linear', position: 'right', title: { display: true, text: 'Temp (°C) / DO (mg/L)', color: '#00d2ff' }, ticks: { color: '#00d2ff' }, grid: { drawOnChartArea: false } }
+        },
+        plugins: {
+          legend: { labels: { color: '#e6f1ff' } }
+        }
+      }
+    });
   }
 };
